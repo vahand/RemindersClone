@@ -10,13 +10,15 @@ import SwiftUI
 struct AddMyListScreen: View {
     @State private var selectedColor: Color
     @State private var listName: String
+    @State private var selectedSymbol: String
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     
-    init(selectedColor: Color = .red, listName: String = "") {
+    init(selectedColor: Color = .red, listName: String = "", selectedSymbol: String = "list.bullet") {
         self.selectedColor = selectedColor
         self.listName = listName
+        self.selectedSymbol = selectedSymbol
     }
     
     private var isFormValid: Bool {
@@ -24,31 +26,9 @@ struct AddMyListScreen: View {
     }
     
     var body: some View {
-//        VStack {
-//            VStack {
-//                ListIconView(color: selectedColor, size: 80, iconName: "list.bullet")
-//                CustomTextField("List Name", text: $listName)
-//                    .foregroundStyle(selectedColor)
-//                    .font(.system(size: 20))
-//                    .fontWeight(.bold)
-//                    .multilineTextAlignment(.center)
-//                    .showClearButton($listName)
-//            }
-//            .padding()
-//            .background(Color.gray
-//                .opacity(0.2)
-//                .clipShape(.rect(cornerRadius: 25))
-//            )
-//            ColorPickerView(selectedColor: $selectedColor)
-//                .padding(18)
-//                .background(Color.gray
-//                    .opacity(0.2)
-//                    .clipShape(.rect(cornerRadius: 25))
-//                )
-//        }
         List {
             VStack {
-                ListIconView(color: selectedColor, size: 80, iconName: "list.bullet")
+                ListIconView(color: selectedColor, size: 80, iconName: selectedSymbol)
                 CustomTextField("List Name", text: $listName)
                     .foregroundStyle(selectedColor)
                     .font(.system(size: 20))
@@ -58,6 +38,7 @@ struct AddMyListScreen: View {
             }
             ColorPickerView(selectedColor: $selectedColor)
                 .padding(8)
+            SymbolsPickerView(systemName: $selectedSymbol)
         }
         .listRowSpacing(15)
         .navigationTitle("New List")
@@ -76,7 +57,7 @@ struct AddMyListScreen: View {
                     guard let hex = selectedColor.toHex() else {
                         return
                     }
-                    let myList = MyList(name: listName, colorCode: hex)
+                    let myList = MyList(name: listName, colorCode: hex, symbol: selectedSymbol)
                     context.insert(myList)
                     dismiss()
                 } label: {

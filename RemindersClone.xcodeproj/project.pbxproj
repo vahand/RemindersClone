@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D922BC602C5CF75800215649 /* SymbolsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */; };
 		D9B023A72C4FCD59003A9EB2 /* ListIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023A62C4FCD59003A9EB2 /* ListIconView.swift */; };
 		D9B023AA2C4FD358003A9EB2 /* MyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023A92C4FD358003A9EB2 /* MyList.swift */; };
 		D9B023AC2C4FD448003A9EB2 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023AB2C4FD448003A9EB2 /* PreviewContainer.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsPickerView.swift; sourceTree = "<group>"; };
 		D9B023A62C4FCD59003A9EB2 /* ListIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIconView.swift; sourceTree = "<group>"; };
 		D9B023A92C4FD358003A9EB2 /* MyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyList.swift; sourceTree = "<group>"; };
 		D9B023AB2C4FD448003A9EB2 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				D9B023A62C4FCD59003A9EB2 /* ListIconView.swift */,
 				D9E51E922C528F2B0015C712 /* CategorieRowView.swift */,
 				D9EC81522C53A740002DC237 /* ReminderCellView.swift */,
+				D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				D9E51E932C528F2B0015C712 /* CategorieRowView.swift in Sources */,
 				D9E6AF092C4E891B0081D246 /* AddMyListScreen.swift in Sources */,
 				D9B023AC2C4FD448003A9EB2 /* PreviewContainer.swift in Sources */,
+				D922BC602C5CF75800215649 /* SymbolsPickerView.swift in Sources */,
 				D9E6AF0C2C4E89B00081D246 /* ColorPickerView.swift in Sources */,
 				D9B023B22C4FE407003A9EB2 /* CustomTextField.swift in Sources */,
 				D9E51E912C528CB90015C712 /* AppDetails.swift in Sources */,

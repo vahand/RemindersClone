@@ -14,7 +14,8 @@ struct AppDetails: View {
         VStack {
             Image(systemName: "apple.logo")
                 .font(.largeTitle)
-            Text("Develop by Vahan Ducher")
+                .padding()
+            Text("Developped by Vahan Ducher")
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

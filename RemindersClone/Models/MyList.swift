@@ -12,13 +12,14 @@ import SwiftData
 class MyList {
     var name: String
     var colorCode: String
-    
+    var symbol: String
     
     @Relationship(deleteRule: .cascade) // this macro is for the database. It adds the foreign key / "deleteRule: .cascade": If I delete myList, all the reminders associated with this list will also be removed
     var reminders: [Reminder] = []
     
-    init(name: String, colorCode: String) {
+    init(name: String, colorCode: String, symbol: String) {
         self.name = name
         self.colorCode = colorCode
+        self.symbol = symbol
     }
 }

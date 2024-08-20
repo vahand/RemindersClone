@@ -63,7 +63,7 @@ struct MyListDetailsScreen: View {
         }
         .sheet(isPresented: $isListInfoPresented, content: {
             NavigationStack {
-                AddMyListScreen(selectedColor: Color(hex: myList.colorCode), listName: myList.name)
+                AddMyListScreen(selectedColor: Color(hex: myList.colorCode), listName: myList.name, selectedSymbol: myList.symbol)
             }
         })
         .sheet(isPresented: $showReminderEditScreen, content: {

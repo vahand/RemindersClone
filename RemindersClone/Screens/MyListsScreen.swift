@@ -28,7 +28,7 @@ struct MyListsScreen: View {
                         MyListDetailsScreen(myList: list)
                     } label: {
                         HStack {
-                            ListIconView(color: Color(hex: list.colorCode), size: 32, iconName: "list.bullet")
+                            ListIconView(color: Color(hex: list.colorCode), size: 32, iconName: list.symbol)
                             Text(list.name)
                         }
                         .padding(2.5)

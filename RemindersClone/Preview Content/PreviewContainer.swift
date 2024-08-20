@@ -22,7 +22,7 @@ var previewContainer: ModelContainer = {
 
 struct SampleData {
     static var lists: [MyList] {
-        return [MyList(name: "ForToday", colorCode: "#2ecc71"), MyList(name: "Entertainment", colorCode: "#9b59b6")]
+        return [MyList(name: "ForToday", colorCode: "#2ecc71", symbol: "trash"), MyList(name: "Entertainment", colorCode: "#9b59b6", symbol: "link")]
     }
     
     static var reminders: [Reminder] {
