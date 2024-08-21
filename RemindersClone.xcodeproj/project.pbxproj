@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9177F302C76245200EF21B5 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */; };
 		D922BC602C5CF75800215649 /* SymbolsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */; };
 		D9B023A72C4FCD59003A9EB2 /* ListIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023A62C4FCD59003A9EB2 /* ListIconView.swift */; };
 		D9B023AA2C4FD358003A9EB2 /* MyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023A92C4FD358003A9EB2 /* MyList.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsPickerView.swift; sourceTree = "<group>"; };
 		D9B023A62C4FCD59003A9EB2 /* ListIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIconView.swift; sourceTree = "<group>"; };
 		D9B023A92C4FD358003A9EB2 /* MyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyList.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				D9B023AE2C4FD8A3003A9EB2 /* Color+Extensions.swift */,
 				D9E51E8C2C5264660015C712 /* String+Extensions.swift */,
 				D9EC81542C53B638002DC237 /* List+Extensions.swift */,
+				D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				D9E51E8D2C5264660015C712 /* String+Extensions.swift in Sources */,
 				D9E6AEF82C4E869B0081D246 /* RemindersCloneApp.swift in Sources */,
 				D9EC81552C53B638002DC237 /* List+Extensions.swift in Sources */,
+				D9177F302C76245200EF21B5 /* Date+Extensions.swift in Sources */,
 				D9E51E8B2C525C160015C712 /* MyListDetailsScreen.swift in Sources */,
 				D9E51E932C528F2B0015C712 /* CategorieRowView.swift in Sources */,
 				D9E6AF092C4E891B0081D246 /* AddMyListScreen.swift in Sources */,
