@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct AddMyListScreen: View {
-    @State private var selectedColor: Color
-    @State private var listName: String
-    @State private var selectedSymbol: String
+    @State private var selectedColor: Color = .red
+    @State private var listName: String = ""
+    @State private var selectedSymbol: String = "list.bullet"
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     
-    init(selectedColor: Color = .red, listName: String = "", selectedSymbol: String = "list.bullet") {
-        self.selectedColor = selectedColor
-        self.listName = listName
-        self.selectedSymbol = selectedSymbol
-    }
+    var myList: MyList? = nil
     
     private var isFormValid: Bool {
         !listName.isEmptyOrWhitespace
@@ -40,6 +36,13 @@ struct AddMyListScreen: View {
                 .padding(8)
             SymbolsPickerView(systemName: $selectedSymbol)
         }
+        .onAppear() {
+            if let myList {
+                listName = myList.name
+                selectedColor = Color(hex: myList.colorCode)
+                selectedSymbol = myList.symbol
+            }
+        }
         .listRowSpacing(15)
         .navigationTitle("New List")
         .navigationBarTitleDisplayMode(.inline)
@@ -54,11 +57,17 @@ struct AddMyListScreen: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    guard let hex = selectedColor.toHex() else {
-                        return
+                    if let myList {
+                        myList.name = listName
+                        myList.colorCode = selectedColor.toHex() ?? ""
+                        myList.symbol = selectedSymbol
+                    } else {
+                        guard let hex = selectedColor.toHex() else { return }
+                        
+                        let myList = MyList(name: listName, colorCode: hex, symbol: selectedSymbol)
+                        context.insert(myList)
                     }
-                    let myList = MyList(name: listName, colorCode: hex, symbol: selectedSymbol)
-                    context.insert(myList)
+                    
                     dismiss()
                 } label: {
                     Text("Done")

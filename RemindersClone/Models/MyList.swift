@@ -17,7 +17,7 @@ class MyList {
     @Relationship(deleteRule: .cascade) // this macro is for the database. It adds the foreign key / "deleteRule: .cascade": If I delete myList, all the reminders associated with this list will also be removed
     var reminders: [Reminder] = []
     
-    init(name: String, colorCode: String, symbol: String) {
+    init(name: String, colorCode: String, symbol: String = "list.bullet") {
         self.name = name
         self.colorCode = colorCode
         self.symbol = symbol

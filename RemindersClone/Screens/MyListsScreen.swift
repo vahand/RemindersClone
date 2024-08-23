@@ -16,6 +16,24 @@ struct MyListsScreen: View {
     @State private var isPresented: Bool = false
     @State private var showAppDetails: Bool = false
     
+    @State private var selectedList: MyList?
+    
+    @State private var actionSheet: MyListScreenSheets?
+    
+    enum MyListScreenSheets: Identifiable {
+        case newList
+        case editList(MyList)
+        
+        var id: Int { // since the enum is Identifiable, we do return something
+            switch self {
+                case .newList:
+                    return 1
+                case .editList(let myList):
+                    return myList.hashValue
+            }
+        }
+    }
+    
     var titleColor: Color {
         colorScheme == .dark ? .white : .black
     }
@@ -24,14 +42,15 @@ struct MyListsScreen: View {
         List {
             Section {
                 ForEach(lists, id: \.self) { list in
-                    NavigationLink {
-                        MyListDetailsScreen(myList: list)
-                    } label: {
-                        HStack {
-                            ListIconView(color: Color(hex: list.colorCode), size: 32, iconName: list.symbol)
-                            Text(list.name)
-                        }
-                        .padding(2.5)
+                    NavigationLink(value: list) {
+                        MyListCellView(list: list)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedList = list
+                            }
+                            .onLongPressGesture(minimumDuration: 0.5) {
+                                actionSheet = .editList(list)
+                            }
                     }
                 }
             } header: {
@@ -42,6 +61,21 @@ struct MyListsScreen: View {
                     .textCase(.none)
             }
         }
+        .navigationDestination(item: $selectedList, destination: { list in
+            MyListDetailsScreen(myList: list)
+        })
+        .sheet(item: $actionSheet, content: { actionSheet in
+            switch actionSheet {
+            case .newList:
+                NavigationStack {
+                    AddMyListScreen()
+                }
+            case .editList(let myList):
+                NavigationStack {
+                    AddMyListScreen(myList: myList)
+                }
+            }
+        })
         .sheet(isPresented: $isPresented, content: {
             NavigationStack {
                 AddMyListScreen()
@@ -72,7 +106,7 @@ struct MyListsScreen: View {
                     .fontWeight(.bold)
                 }
                 Button {
-                    isPresented = true
+                    actionSheet = .newList
                 } label: {
                     Text("Add List")
                 }
