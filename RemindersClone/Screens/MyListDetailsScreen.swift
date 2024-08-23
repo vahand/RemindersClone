@@ -12,6 +12,7 @@ struct MyListDetailsScreen: View {
     @AppStorage("listStyle") private var isListPlain: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.modelContext) private var context
     
     @State private var title: String = ""
     @State private var isNewReminderPresented: Bool = false
@@ -23,6 +24,8 @@ struct MyListDetailsScreen: View {
     @State private var showReminderEditScreen: Bool = false
     
     let myList: MyList
+    
+    private let delay = Delay()
     
     private var isFormValid: Bool {
         !title.isEmptyOrWhitespace
@@ -38,6 +41,12 @@ struct MyListDetailsScreen: View {
         reminder.persistentModelID == selectedReminder?.persistentModelID
     }
     
+    private func deleteReminder(_ indexSet: IndexSet) {
+        guard let index = indexSet.last else { return }
+        let reminder = myList.reminders[index]
+        context.delete(reminder)
+    }
+    
     var body: some View {
         VStack {
             List {
@@ -46,11 +55,17 @@ struct MyListDetailsScreen: View {
                     .listRowSeparator(.hidden)
                     .fontWeight(.bold)
                     .foregroundStyle(Color(hex: myList.colorCode))
-                ForEach(myList.reminders) { reminder in
+                ForEach(myList.reminders.filter({ !$0.isCompleted })) { reminder in
+                    // add "show completed" section button
                     ReminderCellView(reminder: reminder, isSelected: isReminderSelected(reminder)) { event in
                         switch event {
                         case .onChecked(let reminder, let checked):
-                            reminder.isCompleted = checked
+                            // cancel the pending task
+                            delay.cancel()
+                            
+                            delay.performWork {
+                                reminder.isCompleted = checked
+                            }
                         case .onSelect(let reminder):
                             selectedReminder = reminder
                         case .onInfoSelected(let reminder):
@@ -59,11 +74,14 @@ struct MyListDetailsScreen: View {
                         }
                     }
                 }
+                .onDelete(perform: { indexSet in
+                    deleteReminder(indexSet)
+                })
             }
         }
         .sheet(isPresented: $isListInfoPresented, content: {
             NavigationStack {
-                AddMyListScreen(selectedColor: Color(hex: myList.colorCode), listName: myList.name, selectedSymbol: myList.symbol)
+                AddMyListScreen(myList: myList)
             }
         })
         .sheet(isPresented: $showReminderEditScreen, content: {
@@ -81,6 +99,7 @@ struct MyListDetailsScreen: View {
             Button("Done") {
                 if isFormValid {
                     saveReminder()
+                    title = ""
                 }
             }
         }
