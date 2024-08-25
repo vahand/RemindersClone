@@ -12,6 +12,7 @@ struct MyListsScreen: View {
     @Query private var lists: [MyList]
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var context
     
     @State private var isPresented: Bool = false
     @State private var showAppDetails: Bool = false
@@ -48,9 +49,27 @@ struct MyListsScreen: View {
                             .onTapGesture {
                                 selectedList = list
                             }
-                            .onLongPressGesture(minimumDuration: 0.5) {
-                                actionSheet = .editList(list)
-                            }
+                            .contextMenu(menuItems: {
+                                Button {
+                                    actionSheet = .editList(list)
+                                } label: {
+                                    HStack {
+                                        Text("Show List Info")
+                                        Image(systemName: "info.circle")
+                                    }
+                                }
+                                
+                                Divider()
+                                
+                                Button(role: .destructive) {
+                                    context.delete(list)
+                                } label: {
+                                    HStack {
+                                        Text("Delete List")
+                                        Image(systemName: "trash")
+                                    }
+                                }
+                            })
                     }
                 }
             } header: {
@@ -74,11 +93,6 @@ struct MyListsScreen: View {
                 NavigationStack {
                     AddMyListScreen(myList: myList)
                 }
-            }
-        })
-        .sheet(isPresented: $isPresented, content: {
-            NavigationStack {
-                AddMyListScreen()
             }
         })
         .sheet(isPresented: $showAppDetails, content: {
