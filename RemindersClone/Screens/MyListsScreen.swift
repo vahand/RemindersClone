@@ -8,8 +8,33 @@
 import SwiftUI
 import SwiftData
 
+enum ReminderStatsType: Int, Identifiable {
+    case today
+    case scheduled
+    case all
+    case completed
+    
+    var id: Int {
+        self.rawValue
+    }
+    
+    var title: String {
+        switch self {
+        case .today:
+            return "Today"
+        case .scheduled:
+            return "Scheduled"
+        case .all:
+            return "All"
+        case .completed:
+            return "Completed"
+        }
+    }
+}
+
 struct MyListsScreen: View {
     @Query private var lists: [MyList]
+    @Query private var reminders: [Reminder]
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) private var context
@@ -20,6 +45,8 @@ struct MyListsScreen: View {
     @State private var selectedList: MyList?
     
     @State private var actionSheet: MyListScreenSheets?
+    
+    @State private var reminderStatsType: ReminderStatsType?
     
     enum MyListScreenSheets: Identifiable {
         case newList
@@ -39,8 +66,69 @@ struct MyListsScreen: View {
         colorScheme == .dark ? .white : .black
     }
     
+    private var inCompleteReminders: [Reminder] {
+        reminders.filter {
+            !$0.isCompleted
+        }
+    }
+    
+    private var todayReminders: [Reminder] {
+        reminders.filter {
+            guard let reminderDate = $0.reminderDate else { return false }
+            
+            return reminderDate.isToday && !$0.isCompleted
+        }
+    }
+    
+    private var completedReminders: [Reminder] {
+        reminders.filter {
+            $0.isCompleted
+        }
+    }
+    
+    private var scheduledReminders: [Reminder] {
+        reminders.filter {
+            $0.reminderDate != nil && !$0.isCompleted
+        }
+    }
+    
+    private func reminders(for type: ReminderStatsType) -> [Reminder] {
+        switch type {
+        case .all:
+            return inCompleteReminders
+        case .completed:
+            return completedReminders
+        case .scheduled:
+            return scheduledReminders
+        case .today:
+            return todayReminders
+        }
+    }
+    
     var body: some View {
         List {
+            VStack {
+                HStack {
+                    CategorieRowView(title: "Today", remindersCount: todayReminders.count, iconName: "calendar", color: .blue)
+                        .onTapGesture {
+                            reminderStatsType = .today
+                        }
+                    CategorieRowView(title: "Scheduled", remindersCount: scheduledReminders.count, iconName: "calendar", color: .red)
+                        .onTapGesture {
+                            reminderStatsType = .scheduled
+                        }
+                }
+                HStack {
+                    CategorieRowView(title: "All", remindersCount: inCompleteReminders.count, iconName: "tray.circle.fill", color: .black)
+                        .onTapGesture {
+                            reminderStatsType = .all
+                        }
+                    CategorieRowView(title: "Completed", remindersCount: completedReminders.count, iconName: "checkmark.circle.fill", color: .gray)
+                        .onTapGesture {
+                            reminderStatsType = .completed
+                        }
+                }
+            }
             Section {
                 ForEach(lists, id: \.self) { list in
                     NavigationLink(value: list) {
@@ -82,6 +170,11 @@ struct MyListsScreen: View {
         }
         .navigationDestination(item: $selectedList, destination: { list in
             MyListDetailsScreen(myList: list)
+        })
+        .navigationDestination(item: $reminderStatsType, destination: { type in
+            NavigationStack {
+                ReminderListView(reminders: reminders(for: type))
+            }.navigationTitle(type.title)
         })
         .sheet(item: $actionSheet, content: { actionSheet in
             switch actionSheet {

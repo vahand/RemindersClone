@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct MyListDetailsScreen: View {
-    @AppStorage("listStyle") private var isListPlain: Bool = false
+//    @AppStorage("listStyle") private var isListPlain: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
@@ -24,8 +24,6 @@ struct MyListDetailsScreen: View {
     @State private var showReminderEditScreen: Bool = false
     
     let myList: MyList
-    
-    private let delay = Delay()
     
     private var isFormValid: Bool {
         !title.isEmptyOrWhitespace
@@ -49,35 +47,7 @@ struct MyListDetailsScreen: View {
     
     var body: some View {
         VStack {
-            List {
-                Text(myList.name)
-                    .font(.system(.largeTitle, design: .rounded))
-                    .listRowSeparator(.hidden)
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color(hex: myList.colorCode))
-                ForEach(myList.reminders.filter({ !$0.isCompleted })) { reminder in
-                    // add "show completed" section button
-                    ReminderCellView(reminder: reminder, isSelected: isReminderSelected(reminder)) { event in
-                        switch event {
-                        case .onChecked(let reminder, let checked):
-                            // cancel the pending task
-                            delay.cancel()
-                            
-                            delay.performWork {
-                                reminder.isCompleted = checked
-                            }
-                        case .onSelect(let reminder):
-                            selectedReminder = reminder
-                        case .onInfoSelected(let reminder):
-                            showReminderEditScreen = true
-                            selectedReminder = reminder
-                        }
-                    }
-                }
-                .onDelete(perform: { indexSet in
-                    deleteReminder(indexSet)
-                })
-            }
+            ReminderListView(reminders: myList.reminders.filter { !$0.isCompleted })
         }
         .sheet(isPresented: $isListInfoPresented, content: {
             NavigationStack {
