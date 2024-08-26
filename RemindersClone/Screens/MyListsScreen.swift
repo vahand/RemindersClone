@@ -8,6 +8,13 @@
 import SwiftUI
 import SwiftData
 
+struct CategoriesVisibility {
+    var today: Bool = true
+    var scheduled: Bool = true
+    var all: Bool = true
+    var completed: Bool = true
+}
+
 enum ReminderStatsType: Int, Identifiable {
     case today
     case scheduled
@@ -47,6 +54,8 @@ struct MyListsScreen: View {
     @State private var actionSheet: MyListScreenSheets?
     
     @State private var reminderStatsType: ReminderStatsType?
+    
+    @State private var categoriesVisibility: CategoriesVisibility = CategoriesVisibility()
     
     enum MyListScreenSheets: Identifiable {
         case newList
@@ -107,8 +116,11 @@ struct MyListsScreen: View {
     
     var body: some View {
         List {
-            VStack {
-                HStack {
+            Section {
+                LazyVGrid(columns: [
+                    .init(.fixed(170), spacing: 13),
+                    .init(.fixed(170), spacing: 13)
+                ], spacing: 13) {
                     CategorieRowView(title: "Today", remindersCount: todayReminders.count, iconName: "calendar", color: .blue)
                         .onTapGesture {
                             reminderStatsType = .today
@@ -117,8 +129,6 @@ struct MyListsScreen: View {
                         .onTapGesture {
                             reminderStatsType = .scheduled
                         }
-                }
-                HStack {
                     CategorieRowView(title: "All", remindersCount: inCompleteReminders.count, iconName: "tray.circle.fill", color: .black)
                         .onTapGesture {
                             reminderStatsType = .all
@@ -129,6 +139,7 @@ struct MyListsScreen: View {
                         }
                 }
             }
+            .listRowBackground(Color.listBackground)
             Section {
                 ForEach(lists, id: \.self) { list in
                     NavigationLink(value: list) {
@@ -168,6 +179,7 @@ struct MyListsScreen: View {
                     .textCase(.none)
             }
         }
+        .listSectionSpacing(0)
         .navigationDestination(item: $selectedList, destination: { list in
             MyListDetailsScreen(myList: list)
         })
@@ -204,7 +216,7 @@ struct MyListsScreen: View {
             
             ToolbarItemGroup(placement: .bottomBar) {
                 Button {
-//                    isNewReminderPresented = true
+                    //                    isNewReminderPresented = true
                 } label: {
                     HStack {
                         Image(systemName: "plus.circle.fill")
