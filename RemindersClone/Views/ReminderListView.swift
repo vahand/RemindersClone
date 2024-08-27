@@ -13,13 +13,14 @@ struct ReminderListView: View {
     @Environment(\.modelContext) private var context
     
     @State private var selectedReminder: Reminder?
-    @State private var showReminderEditScreen: Bool = false
     
     let reminders: [Reminder]
     
     @State var listTitle: String
     @State var listColor: Color
-        
+    
+    @State private var showReminderEditScreen: Bool = false
+    
     @State private var reminderIdAndDelay: [PersistentIdentifier: Delay] = [:] // a dictionnary
     
     private func isReminderSelected(_ reminder: Reminder) -> Bool {
@@ -42,28 +43,45 @@ struct ReminderListView: View {
             Section {
                 ForEach(reminders) { reminder in
                     // add "show completed" section button
-                    ReminderCellView(reminder: reminder) { event in
-                        switch event {
-                        case .onChecked(let reminder, let checked):
-                            // get the delay from the dict
-                            var delay = reminderIdAndDelay[reminder.persistentModelID] // give the delat linked to the reminder
-                            if let delay {
-                                // cancel the current work
-                                delay.cancel()
-                                // remove the delay from the dict
-                                reminderIdAndDelay.removeValue(forKey: reminder.persistentModelID)
-                            } else {
-                                // create a new delay and add it to the dict
-                                delay = Delay()
-                                reminderIdAndDelay[reminder.persistentModelID] = delay
-                                delay?.performWork {
-                                    reminder.isCompleted = checked
+                    ZStack {
+                        ReminderCellView(reminder: reminder) { event in
+                            switch event {
+                            case .onChecked(let reminder, let checked):
+                                // get the delay from the dict
+                                var delay = reminderIdAndDelay[reminder.persistentModelID] // give the delat linked to the reminder
+                                if let delay {
+                                    // cancel the current work
+                                    delay.cancel()
+                                    // remove the delay from the dict
+                                    reminderIdAndDelay.removeValue(forKey: reminder.persistentModelID)
+                                } else {
+                                    // create a new delay and add it to the dict
+                                    delay = Delay()
+                                    reminderIdAndDelay[reminder.persistentModelID] = delay
+                                    delay?.performWork {
+                                        reminder.isCompleted = checked
+                                    }
+                                }
+                            case .onSelect(let reminder):
+                                selectedReminder = reminder
+                            case .cancelSelection:
+                                if !showReminderEditScreen {
+                                    selectedReminder = nil
                                 }
                             }
-
-                        case .onSelect(let reminder):
-                            showReminderEditScreen = true
-                            selectedReminder = reminder
+                        }
+                        if (isReminderSelected(reminder)) {
+                            Button {
+                                showReminderEditScreen = true
+                            } label: {
+                                Image(systemName: "info.circle")
+                                    .font(.title2)
+                                    .foregroundStyle(listColor)
+                            }
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .trailing
+                            )
                         }
                     }
                 }
@@ -73,13 +91,27 @@ struct ReminderListView: View {
             }
             .listSectionSeparator(.hidden, edges: .top)
         }
-        .sheet(isPresented: $showReminderEditScreen, content: {
+        .sheet(isPresented: $showReminderEditScreen, onDismiss: hideKeyboard
+               , content: {
             if let selectedReminder {
                 NavigationStack {
                     ReminderEditScreen(reminder: selectedReminder)
                 }
             }
         })
+        .scrollDismissesKeyboard(.interactively)
+        .toolbar {
+            if selectedReminder != nil {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        hideKeyboard()
+                    } label: {
+                        Text("Done")
+                            .fontWeight(.bold)
+                    }
+                }
+            }
+        }
     }
 }
 

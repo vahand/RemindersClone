@@ -74,7 +74,6 @@ struct MyListDetailsScreen: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                     }
-                    
                 }
                 
                 ToolbarItem(placement: .bottomBar) {

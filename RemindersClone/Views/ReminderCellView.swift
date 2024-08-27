@@ -11,12 +11,20 @@ import SwiftData
 enum ReminderCellEvents {
     case onChecked(Reminder, Bool)
     case onSelect(Reminder)
+    case cancelSelection
 }
 
 struct ReminderCellView: View {
     let reminder: Reminder
     let onEvent: (ReminderCellEvents) -> Void
     @State private var checked: Bool = false
+    @State private var reminderTitle: String = ""
+    
+    init(reminder: Reminder, onEvent: @escaping (ReminderCellEvents) -> Void) {
+        self.reminder = reminder
+        self.onEvent = onEvent
+        _reminderTitle = State(initialValue: reminder.title)
+    }
     
     private func formatReminderDate(_ date: Date) -> String {
         if date.isToday {
@@ -25,6 +33,15 @@ struct ReminderCellView: View {
             return "Tomorrow"
         } else {
             return date.formatted(date: .numeric, time: .omitted)
+        }
+    }
+    
+    private func shareFocus(focused: Bool) {
+        if focused {
+            onEvent(.onSelect(reminder))
+        } else {
+            reminder.title = reminderTitle
+            onEvent(.cancelSelection)
         }
     }
     
@@ -40,7 +57,7 @@ struct ReminderCellView: View {
                     onEvent(.onChecked(reminder, checked))
                 }
             VStack {
-                Text(reminder.title)
+                TextField("", text: $reminderTitle, onEditingChanged: shareFocus)
                     .frame(
                         maxWidth: .infinity,
                         alignment: .leading
@@ -74,9 +91,6 @@ struct ReminderCellView: View {
             Spacer()
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            onEvent(.onSelect(reminder))
-        }
     }
 }
 

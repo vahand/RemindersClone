@@ -45,7 +45,7 @@ enum ReminderStatsType: Int, Identifiable {
         case .scheduled:
             return .red
         case .all:
-            return .black
+            return .gray
         case .completed:
             return .gray
         }
