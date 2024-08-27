@@ -62,7 +62,6 @@ struct ReminderListView: View {
                             }
 
                         case .onSelect(let reminder):
-                            print("Reminder selected")
                             showReminderEditScreen = true
                             selectedReminder = reminder
                         }
