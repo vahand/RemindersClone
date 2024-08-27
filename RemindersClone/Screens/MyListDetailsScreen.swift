@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct MyListDetailsScreen: View {
-//    @AppStorage("listStyle") private var isListPlain: Bool = false
+    //    @AppStorage("listStyle") private var isListPlain: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
@@ -46,97 +46,98 @@ struct MyListDetailsScreen: View {
     }
     
     var body: some View {
-        VStack {
-            ReminderListView(reminders: myList.reminders.filter { !$0.isCompleted })
-        }
-        .sheet(isPresented: $isListInfoPresented, content: {
-            NavigationStack {
-                AddMyListScreen(myList: myList)
-            }
-        })
-        .sheet(isPresented: $showReminderEditScreen, content: {
-            if let selectedReminder {
+        ReminderListView(reminders: myList.reminders.filter { !$0.isCompleted }, listTitle: myList.name, listColor: Color(hex: myList.colorCode))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(myList.name)
+            .listStyle(.plain)
+            .sheet(isPresented: $isListInfoPresented, content: {
                 NavigationStack {
-                    ReminderEditScreen(reminder: selectedReminder)
+                    AddMyListScreen(myList: myList)
+                }
+            })
+            .sheet(isPresented: $showReminderEditScreen, content: {
+                if let selectedReminder {
+                    NavigationStack {
+                        ReminderEditScreen(reminder: selectedReminder)
+                    }
+                }
+            })
+            .myListStyle(isListPlain: !viewAsColumn)
+            .listRowSpacing(viewAsColumn ? 8 : 0)
+            .alert("New Reminder", isPresented: $isNewReminderPresented) {
+                TextField("", text: $title)
+                Button("Cancel", role: .cancel) {}
+                Button("Done") {
+                    if isFormValid {
+                        saveReminder()
+                        title = ""
+                    }
                 }
             }
-        })
-        .myListStyle(isListPlain: !viewAsColumn)
-        .listRowSpacing(viewAsColumn ? 8 : 0)
-        .alert("New Reminder", isPresented: $isNewReminderPresented) {
-            TextField("", text: $title)
-            Button("Cancel", role: .cancel) {}
-            Button("Done") {
-                if isFormValid {
-                    saveReminder()
-                    title = ""
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "chevron.left") // Back arrow image
+                        .fontWeight(.semibold)
+                    Text("Lists") // Custom back button text
                 }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack(spacing: 4) {
-                Image(systemName: "chevron.left") // Back arrow image
-                    .fontWeight(.semibold)
-                Text("Lists") // Custom back button text
-            }
-        })
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Section {
-                        Button {
-                            viewAsColumn.toggle()
-                        } label: {
-                            if viewAsColumn {
-                                HStack {
-                                    Text("View as List")
-                                    Spacer()
-                                    Image(systemName: "list.dash")
-                                }
-                            } else {
-                                HStack {
-                                    Text("View as Columns")
-                                    Spacer()
-                                    Image(systemName: "tablecells.fill")
+            })
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Section {
+                            Button {
+                                viewAsColumn.toggle()
+                            } label: {
+                                if viewAsColumn {
+                                    HStack {
+                                        Text("View as List")
+                                        Spacer()
+                                        Image(systemName: "list.dash")
+                                    }
+                                } else {
+                                    HStack {
+                                        Text("View as Columns")
+                                        Spacer()
+                                        Image(systemName: "tablecells.fill")
+                                    }
                                 }
                             }
                         }
+                        Button {
+                            isListInfoPresented = true
+                        } label: {
+                            HStack {
+                                Text("Show List Info")
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                        
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
                     }
+                    
+                }
+                
+                ToolbarItem(placement: .bottomBar) {
                     Button {
-                        isListInfoPresented = true
+                        isNewReminderPresented = true
                     } label: {
                         HStack {
-                            Text("Show List Info")
-                            Image(systemName: "info.circle")
+                            Image(systemName: "plus.circle.fill")
+                            Text("New Reminder")
                         }
+                        .foregroundStyle(Color(hex: myList.colorCode))
+                        .fontWeight(.bold)
                     }
-
-                } label: {
-                    Image(systemName: "ellipsis.circle")
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
                 }
-
             }
-            
-            ToolbarItem(placement: .bottomBar) {
-                Button {
-                    isNewReminderPresented = true
-                } label: {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                        Text("New Reminder")
-                    }
-                    .foregroundStyle(Color(hex: myList.colorCode))
-                    .fontWeight(.bold)
-                }
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading
-                )
-            }
-        }
     }
 }
 

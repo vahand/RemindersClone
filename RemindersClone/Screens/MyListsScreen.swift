@@ -37,6 +37,19 @@ enum ReminderStatsType: Int, Identifiable {
             return "Completed"
         }
     }
+    
+    var color: Color {
+        switch self {
+        case .today:
+            return .blue
+        case .scheduled:
+            return .red
+        case .all:
+            return .black
+        case .completed:
+            return .gray
+        }
+    }
 }
 
 struct MyListsScreen: View {
@@ -63,10 +76,10 @@ struct MyListsScreen: View {
         
         var id: Int { // since the enum is Identifiable, we do return something
             switch self {
-                case .newList:
-                    return 1
-                case .editList(let myList):
-                    return myList.hashValue
+            case .newList:
+                return 1
+            case .editList(let myList):
+                return myList.hashValue
             }
         }
     }
@@ -185,8 +198,11 @@ struct MyListsScreen: View {
         })
         .navigationDestination(item: $reminderStatsType, destination: { type in
             NavigationStack {
-                ReminderListView(reminders: reminders(for: type))
-            }.navigationTitle(type.title)
+                ReminderListView(reminders: reminders(for: type), listTitle: type.title, listColor: type.color)
+                    .listStyle(.plain)
+            }
+            .navigationTitle(type.title)
+            .navigationBarTitleDisplayMode(.inline)
         })
         .sheet(item: $actionSheet, content: { actionSheet in
             switch actionSheet {
