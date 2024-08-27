@@ -28,7 +28,6 @@
 		D9E6AF092C4E891B0081D246 /* AddMyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6AF082C4E891B0081D246 /* AddMyListScreen.swift */; };
 		D9E6AF0C2C4E89B00081D246 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E6AF0B2C4E89B00081D246 /* ColorPickerView.swift */; };
 		D9EC81532C53A740002DC237 /* ReminderCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC81522C53A740002DC237 /* ReminderCellView.swift */; };
-		D9EC81552C53B638002DC237 /* List+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC81542C53B638002DC237 /* List+Extensions.swift */; };
 		D9EC81572C53BD95002DC237 /* ReminderEditScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EC81562C53BD95002DC237 /* ReminderEditScreen.swift */; };
 		D9F74C2A2C7762C100F7CE47 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F74C292C7762C100F7CE47 /* Delay.swift */; };
 /* End PBXBuildFile section */
@@ -56,7 +55,6 @@
 		D9E6AF082C4E891B0081D246 /* AddMyListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyListScreen.swift; sourceTree = "<group>"; };
 		D9E6AF0B2C4E89B00081D246 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		D9EC81522C53A740002DC237 /* ReminderCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCellView.swift; sourceTree = "<group>"; };
-		D9EC81542C53B638002DC237 /* List+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Extensions.swift"; sourceTree = "<group>"; };
 		D9EC81562C53BD95002DC237 /* ReminderEditScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditScreen.swift; sourceTree = "<group>"; };
 		D9F74C292C7762C100F7CE47 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +84,6 @@
 			children = (
 				D9B023AE2C4FD8A3003A9EB2 /* Color+Extensions.swift */,
 				D9E51E8C2C5264660015C712 /* String+Extensions.swift */,
-				D9EC81542C53B638002DC237 /* List+Extensions.swift */,
 				D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */,
 			);
 			path = Extensions;
@@ -254,7 +251,6 @@
 				D9EC81532C53A740002DC237 /* ReminderCellView.swift in Sources */,
 				D9E51E8D2C5264660015C712 /* String+Extensions.swift in Sources */,
 				D9E6AEF82C4E869B0081D246 /* RemindersCloneApp.swift in Sources */,
-				D9EC81552C53B638002DC237 /* List+Extensions.swift in Sources */,
 				D9F74C2A2C7762C100F7CE47 /* Delay.swift in Sources */,
 				D9177F302C76245200EF21B5 /* Date+Extensions.swift in Sources */,
 				D96DA7882C7B7BC4004A826E /* ReminderListView.swift in Sources */,

@@ -62,7 +62,6 @@ struct MyListDetailsScreen: View {
                     }
                 }
             })
-            .myListStyle(isListPlain: !viewAsColumn)
             .listRowSpacing(viewAsColumn ? 8 : 0)
             .alert("New Reminder", isPresented: $isNewReminderPresented) {
                 TextField("", text: $title)
@@ -87,25 +86,6 @@ struct MyListDetailsScreen: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Section {
-                            Button {
-                                viewAsColumn.toggle()
-                            } label: {
-                                if viewAsColumn {
-                                    HStack {
-                                        Text("View as List")
-                                        Spacer()
-                                        Image(systemName: "list.dash")
-                                    }
-                                } else {
-                                    HStack {
-                                        Text("View as Columns")
-                                        Spacer()
-                                        Image(systemName: "tablecells.fill")
-                                    }
-                                }
-                            }
-                        }
                         Button {
                             isListInfoPresented = true
                         } label: {
