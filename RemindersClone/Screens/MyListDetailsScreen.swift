@@ -9,8 +9,6 @@ import SwiftUI
 import SwiftData
 
 struct MyListDetailsScreen: View {
-    //    @AppStorage("listStyle") private var isListPlain: Bool = false
-    
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
     
@@ -18,10 +16,6 @@ struct MyListDetailsScreen: View {
     @State private var isNewReminderPresented: Bool = false
     
     @State private var isListInfoPresented: Bool = false
-    @State private var viewAsColumn: Bool = false
-    
-    @State private var selectedReminder: Reminder?
-    @State private var showReminderEditScreen: Bool = false
     
     let myList: MyList
     
@@ -35,16 +29,6 @@ struct MyListDetailsScreen: View {
         title = ""
     }
     
-    private func isReminderSelected(_ reminder: Reminder) -> Bool {
-        reminder.persistentModelID == selectedReminder?.persistentModelID
-    }
-    
-    private func deleteReminder(_ indexSet: IndexSet) {
-        guard let index = indexSet.last else { return }
-        let reminder = myList.reminders[index]
-        context.delete(reminder)
-    }
-    
     var body: some View {
         ReminderListView(reminders: myList.reminders.filter { !$0.isCompleted }, listTitle: myList.name, listColor: Color(hex: myList.colorCode))
             .navigationBarTitleDisplayMode(.inline)
@@ -55,14 +39,6 @@ struct MyListDetailsScreen: View {
                     AddMyListScreen(myList: myList)
                 }
             })
-            .sheet(isPresented: $showReminderEditScreen, content: {
-                if let selectedReminder {
-                    NavigationStack {
-                        ReminderEditScreen(reminder: selectedReminder)
-                    }
-                }
-            })
-            .listRowSpacing(viewAsColumn ? 8 : 0)
             .alert("New Reminder", isPresented: $isNewReminderPresented) {
                 TextField("", text: $title)
                 Button("Cancel", role: .cancel) {}

@@ -12,11 +12,6 @@ struct ReminderListView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
     
-    @State private var isNewReminderPresented: Bool = false
-    
-    @State private var isListInfoPresented: Bool = false
-    @State private var viewAsColumn: Bool = false
-    
     @State private var selectedReminder: Reminder?
     @State private var showReminderEditScreen: Bool = false
     
@@ -67,6 +62,8 @@ struct ReminderListView: View {
                             }
 
                         case .onSelect(let reminder):
+                            print("Reminder selected")
+                            showReminderEditScreen = true
                             selectedReminder = reminder
                         }
                     }
