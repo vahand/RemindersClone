@@ -16,6 +16,7 @@
 		D9B023AF2C4FD8A3003A9EB2 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023AE2C4FD8A3003A9EB2 /* Color+Extensions.swift */; };
 		D9B023B22C4FE407003A9EB2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B023B12C4FE407003A9EB2 /* CustomTextField.swift */; };
 		D9C3E43F2C78E0D1002455A6 /* MyListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C3E43E2C78E0D1002455A6 /* MyListCellView.swift */; };
+		D9DA5D882C7E08460081F6E7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DA5D872C7E08460081F6E7 /* NotificationManager.swift */; };
 		D9E51E892C5256D80015C712 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E51E882C5256D80015C712 /* Reminder.swift */; };
 		D9E51E8B2C525C160015C712 /* MyListDetailsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E51E8A2C525C160015C712 /* MyListDetailsScreen.swift */; };
 		D9E51E8D2C5264660015C712 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E51E8C2C5264660015C712 /* String+Extensions.swift */; };
@@ -42,6 +43,7 @@
 		D9B023AE2C4FD8A3003A9EB2 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		D9B023B12C4FE407003A9EB2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D9C3E43E2C78E0D1002455A6 /* MyListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListCellView.swift; sourceTree = "<group>"; };
+		D9DA5D872C7E08460081F6E7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		D9E51E882C5256D80015C712 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		D9E51E8A2C525C160015C712 /* MyListDetailsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListDetailsScreen.swift; sourceTree = "<group>"; };
 		D9E51E8C2C5264660015C712 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -97,6 +99,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		D9DA5D862C7E08370081F6E7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D9DA5D872C7E08460081F6E7 /* NotificationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		D9E6AEEB2C4E869B0081D246 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +126,7 @@
 		D9E6AEF62C4E869B0081D246 /* RemindersClone */ = {
 			isa = PBXGroup;
 			children = (
+				D9DA5D862C7E08370081F6E7 /* Managers */,
 				D9F74C282C77627600F7CE47 /* Utils */,
 				D9B023AD2C4FD896003A9EB2 /* Extensions */,
 				D9B023A82C4FD34D003A9EB2 /* Models */,
@@ -246,6 +257,7 @@
 				D9E6AF072C4E86D50081D246 /* MyListsScreen.swift in Sources */,
 				D9B023A72C4FCD59003A9EB2 /* ListIconView.swift in Sources */,
 				D9EC81572C53BD95002DC237 /* ReminderEditScreen.swift in Sources */,
+				D9DA5D882C7E08460081F6E7 /* NotificationManager.swift in Sources */,
 				D9B023AF2C4FD8A3003A9EB2 /* Color+Extensions.swift in Sources */,
 				D9B023AA2C4FD358003A9EB2 /* MyList.swift in Sources */,
 				D9EC81532C53A740002DC237 /* ReminderCellView.swift in Sources */,
