@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9173D032C7F33AF000D1384 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9173D022C7F33AF000D1384 /* UINavigationController+Extensions.swift */; };
 		D9177F302C76245200EF21B5 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */; };
 		D922BC602C5CF75800215649 /* SymbolsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */; };
 		D96DA7882C7B7BC4004A826E /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DA7872C7B7BC4004A826E /* ReminderListView.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9173D022C7F33AF000D1384 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		D922BC5F2C5CF75800215649 /* SymbolsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsPickerView.swift; sourceTree = "<group>"; };
 		D96DA7872C7B7BC4004A826E /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				D9E51E8C2C5264660015C712 /* String+Extensions.swift */,
 				D9177F2F2C76245200EF21B5 /* Date+Extensions.swift */,
 				D9A012F42C7E3512007B92AA /* View+Extensions.swift */,
+				D9173D022C7F33AF000D1384 /* UINavigationController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				D9DA5D882C7E08460081F6E7 /* NotificationManager.swift in Sources */,
 				D9B023AF2C4FD8A3003A9EB2 /* Color+Extensions.swift in Sources */,
 				D9B023AA2C4FD358003A9EB2 /* MyList.swift in Sources */,
+				D9173D032C7F33AF000D1384 /* UINavigationController+Extensions.swift in Sources */,
 				D9EC81532C53A740002DC237 /* ReminderCellView.swift in Sources */,
 				D9A012F52C7E3512007B92AA /* View+Extensions.swift in Sources */,
 				D9E51E8D2C5264660015C712 /* String+Extensions.swift in Sources */,

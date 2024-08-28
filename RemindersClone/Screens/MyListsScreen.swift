@@ -194,7 +194,9 @@ struct MyListsScreen: View {
         }
         .listSectionSpacing(0)
         .navigationDestination(item: $selectedList, destination: { list in
-            MyListDetailsScreen(myList: list)
+            NavigationStack {            
+                MyListDetailsScreen(myList: list)
+            }
         })
         .navigationDestination(item: $reminderStatsType, destination: { type in
             NavigationStack {
