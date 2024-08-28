@@ -10,7 +10,7 @@ import SwiftData
 
 @Model // since this model is persited to the database. can only be applied to a class
 class Reminder {
-    var title: String
+    var title: String = ""
     var notes: String?
     var isCompleted: Bool = false
     var reminderDate: Date?

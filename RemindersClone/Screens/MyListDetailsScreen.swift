@@ -12,6 +12,8 @@ struct MyListDetailsScreen: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var context
     
+    @Query private var reminders: [Reminder]
+    
     @State private var title: String = ""
     @State private var isNewReminderPresented: Bool = false
     
@@ -19,18 +21,30 @@ struct MyListDetailsScreen: View {
     
     let myList: MyList
     
+    init(myList: MyList) {
+        self.myList = myList
+        
+        let listId = myList.persistentModelID
+        
+        let predicate = #Predicate<Reminder> { reminder in // Predicate enable to filter reminders in the [Reminder] list depending on some conditions
+            reminder.list?.persistentModelID == listId && !reminder.isCompleted
+        }
+        
+        _reminders = Query(filter: predicate) // make a request to the Data base, based on the filter created with the Predicate
+    }
+    
     private var isFormValid: Bool {
         !title.isEmptyOrWhitespace
     }
     
     private func saveReminder() {
         let reminder = Reminder(title: title)
-        myList.reminders.append(reminder)
+        myList.reminders?.append(reminder)
         title = ""
     }
     
     var body: some View {
-        ReminderListView(reminders: myList.reminders.filter { !$0.isCompleted }, listTitle: myList.name, listColor: Color(hex: myList.colorCode))
+        ReminderListView(reminders: reminders, listTitle: myList.name, listColor: Color(hex: myList.colorCode))
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(myList.name)
             .listStyle(.plain)

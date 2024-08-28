@@ -10,12 +10,13 @@ import SwiftData
 
 @Model
 class MyList {
-    var name: String
-    var colorCode: String
-    var symbol: String
+    // For iCloud implementation, we have to provide default value for all properties
+    var name: String = ""
+    var colorCode: String = "#34C759"
+    var symbol: String = "list.bullet"
     
     @Relationship(deleteRule: .cascade) // this macro is for the database. It adds the foreign key / "deleteRule: .cascade": If I delete myList, all the reminders associated with this list will also be removed
-    var reminders: [Reminder] = []
+    var reminders: [Reminder]?
     
     init(name: String, colorCode: String, symbol: String = "list.bullet") {
         self.name = name
